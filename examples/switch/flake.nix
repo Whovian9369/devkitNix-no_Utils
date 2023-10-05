@@ -1,28 +1,27 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-    devkitNix.url = "path:../../.";
+    devkitNix.url = "github:Whovian9369/devkitNix-no_Utils";
   };
 
   outputs = {
     self,
     nixpkgs,
-    flake-utils,
     devkitNix,
     ...
   }:
-    flake-utils.lib.eachDefaultSystem (system: let
+    let
+      system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         overlays = [devkitNix.overlays.default];
       };
     in {
-      devShells.default = pkgs.mkShell {
+      devShells.${system}.default = pkgs.mkShell {
         buildInputs = [pkgs.devkitNix.devkitA64];
         inherit (pkgs.devkitNix.devkitA64) shellHook;
       };
-      packages.default = pkgs.stdenv.mkDerivation {
+      packages.${system}.default = pkgs.stdenv.mkDerivation {
         name = "devkitA64-example";
         src = ./.;
 
@@ -32,5 +31,5 @@
           cp example.nro $out
         '';
       };
-    });
+    };
 }
