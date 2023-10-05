@@ -62,7 +62,7 @@
       });
 
     packages = pkgs: {
-      devkitA64.${system} = mkDevkit pkgs {
+      devkitA64 = mkDevkit pkgs {
         name = "devkitA64";
         src = ./sources/devkita64.json;
         includePaths = [
@@ -110,7 +110,7 @@
     let
       pkgs' = nixpkgs.legacyPackages.${system};
     in {
-      packages = {
+      packages.${system} = {
         inherit (packages pkgs') devkitA64 devkitARM devkitPPC;
       };
     }
