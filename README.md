@@ -1,8 +1,9 @@
 Hello! I forked the [original repo](https://github.com/bandithedoge/devkitNix) to try building some Switch homebrew on NixOS but without requiring `flake-utils` in each flake to do so!
+
 Honestly, it's untested as all I ended up doing was remove `flake-utils` being required from each flake. I didn't sucessfully get the Switch example built, but I'm going to play around with it and see what I'm able to do soon!
+
 Pushing the as it currently is, so please add an issue if you encounter issues, or pull request if you know how to solve them!
 The original readme is just below.
-
 
 
 ![devkitNix](pic.jpg)
