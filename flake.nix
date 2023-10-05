@@ -1,14 +1,13 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
   };
   outputs = {
     self,
-    flake-utils,
     nixpkgs,
     ...
   }: let
+    system = "x86_64-linux";
     mkDevkit = pkgs: {
       name,
       src,
@@ -63,7 +62,7 @@
       });
 
     packages = pkgs: {
-      devkitA64 = mkDevkit pkgs {
+      devkitA64.${system} = mkDevkit pkgs {
         name = "devkitA64";
         src = ./sources/devkita64.json;
         includePaths = [
@@ -108,13 +107,13 @@
       };
     };
   in
-    (flake-utils.lib.eachDefaultSystem (system: let
+    let
       pkgs' = nixpkgs.legacyPackages.${system};
     in {
       packages = {
         inherit (packages pkgs') devkitA64 devkitARM devkitPPC;
       };
-    }))
+    }
     // {
       overlays.default = final: prev: {
         devkitNix = {
