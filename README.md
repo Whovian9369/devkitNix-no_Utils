@@ -1,3 +1,10 @@
+Hello! I forked the [original repo](https://github.com/bandithedoge/devkitNix) to try building some Switch homebrew on NixOS but without requiring `flake-utils` in each flake to do so!
+Honestly, it's untested as all I ended up doing was remove `flake-utils` being required from each flake. I didn't sucessfully get the Switch example built, but I'm going to play around with it and see what I'm able to do soon!
+Pushing the as it currently is, so please add an issue if you encounter issues, or pull request if you know how to solve them!
+The original readme is just below.
+
+
+
 ![devkitNix](pic.jpg)
 
 This flake allows you to use [devkitPro](https://devkitpro.org/) toolchains in your Nix expressions.
@@ -14,18 +21,17 @@ To use the toolchains, create a `flake.nix` file and import devkitNix as shown i
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-    devkitNix.url = "github:bandithedoge/devkitNix";
+    devkitNix.url = "github:Whovian9369/devkitNix-no_Utils";
   };
 
   outputs = {
     self,
     nixpkgs,
-    flake-utils,
     devkitNix,
     ...
   }:
-    flake-utils.lib.eachDefaultSystem (system: let
+    let
+      system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         # devkitNix provides an overlay with the toolchains
@@ -33,7 +39,7 @@ To use the toolchains, create a `flake.nix` file and import devkitNix as shown i
       };
     in {
 
-      devShells.default = pkgs.mkShell {
+      devShells.${system}.default = pkgs.mkShell {
         # devkitNix packages also provide relevant tools you may want available
         # in your PATH.
         buildInputs = [pkgs.devkitNix.devkitA64];
@@ -45,7 +51,7 @@ To use the toolchains, create a `flake.nix` file and import devkitNix as shown i
         inherit (pkgs.devkitNix.devkitA64) shellHook;
       };
 
-      packages.default = pkgs.stdenv.mkDerivation {
+      packages.${system}.default = pkgs.stdenv.mkDerivation {
         name = "devkitA64-example";
         src = ./.;
 
@@ -62,7 +68,7 @@ To use the toolchains, create a `flake.nix` file and import devkitNix as shown i
         '';
       };
 
-    });
+    };
 }
 ```
 
