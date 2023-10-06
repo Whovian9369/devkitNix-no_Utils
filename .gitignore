@@ -6,3 +6,4 @@ build/
 *.nro
 *.nds
 *.dol
+*.log # Added to ignore debugging logs
