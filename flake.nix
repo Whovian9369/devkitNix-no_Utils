@@ -24,14 +24,11 @@
 
         buildPhase = ''
           tar -xf $src
-
+          mkdir $out
           for archive in $(find *.tar)
           do
-            tar -xf $archive
+            tar -xf $archive -C $out
           done
-
-          mkdir -p $out
-          cp -r opt $out/opt
           ln -sf $out/opt/devkitpro/tools/bin $out/bin
         '';
 
