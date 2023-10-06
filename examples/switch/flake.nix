@@ -28,6 +28,7 @@
         makeFlags = ["TARGET=example"];
         preBuild = pkgs.devkitNix.devkitA64.shellHook;
         installPhase = ''
+          mkdir $out
           cp example.nro $out
         '';
       };

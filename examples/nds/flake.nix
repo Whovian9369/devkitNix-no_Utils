@@ -30,6 +30,7 @@
         makeFlags = ["TARGET=example"];
         preBuild = pkgs.devkitNix.devkitARM.shellHook;
         installPhase = ''
+          mkdir $out
           cp example.nds $out
         '';
       };
