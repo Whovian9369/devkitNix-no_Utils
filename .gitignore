@@ -1,9 +1,9 @@
-.direnv/
-result
-build/
-*.elf
-*.nacp
-*.nro
-*.nds
-*.dol
-*.log # Added to ignore debugging logs
+.direnv/ # `direnv` settings for a constant flake debug environment
+build/ # Data required during build
+result # Symlink to `nix build` output 
+*.elf  # Debug ELF for built example
+*.nacp # Switch `control.nacp` file, used for Switch homebrew
+*.nro  # Switch homebrew executables
+*.nds  # Nintendo DS homebrew roms
+*.dol  # GameCube and Wii homebrew executables
+*.log  # Debugging logs for testing the Flake
